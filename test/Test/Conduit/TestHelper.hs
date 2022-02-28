@@ -76,7 +76,7 @@ setupTestArticle userId = do
     let articleUserId = userId
     runSql $
         sql $ mconcat
-            [ "INSERT INTO articles (article_slug, article_title, article_description, article_body, article_user_id)"
+            [ "INSERT INTO articles (slug, title, description, body, user_id)"
             , "VALUES ('"
             , T.encodeUtf8 articleSlug
             , "', '"
@@ -97,7 +97,7 @@ setupTestUser username = do
     hash <- hashPassword password
     runSql $
         sql $ mconcat
-            [ "INSERT INTO users (user_email, user_username, user_password, user_bio, user_image)"
+            [ "INSERT INTO users (email, username, password, bio, image)"
             , "VALUES ('"
             , T.encodeUtf8 email
             , "', '"
@@ -116,7 +116,7 @@ removeTestUser username = do
     runSql $
         sql $ mconcat
             [ "DELETE FROM users "
-            , "WHERE user_username = '" 
+            , "WHERE username = '" 
             , T.encodeUtf8 username 
             , "';" 
             ]

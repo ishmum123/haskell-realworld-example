@@ -25,8 +25,8 @@ tagSchema = TableSchema
     { name = "tags"
     , schema = Nothing
     , columns = TagEntity
-        { entityTagId = "tag_id"
-        , entityTagText = "tag_text"
+        { entityTagId = "id"
+        , entityTagText = "text"
         }
     }
 
@@ -39,7 +39,7 @@ getTagIdStmt tag = do
 insertTagStmt :: Text -> Insert [TagId]
 insertTagStmt tag = Insert
     { into = tagSchema
-    , rows = values [TagEntity (unsafeCastExpr $ nextval "tags_tag_id_seq")  (lit tag)]
+    , rows = values [TagEntity (unsafeCastExpr $ nextval "tags_id_seq")  (lit tag)]
     , onConflict = Abort
     , returning = Projection entityTagId
     }

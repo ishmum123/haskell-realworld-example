@@ -20,7 +20,7 @@ data AppEnv = AppEnv
 type AppM = RIO AppEnv
 
 runHandler ∷ AppEnv → AppM a → Servant.Handler a
-runHandler env app = Servant.Handler $ ExceptT $ try $ runRIO env app
+runHandler env app = Servant.Handler . ExceptT . try $ runRIO env app
 
 instance HasDbPool AppEnv where
     getDbPool = envDbPool

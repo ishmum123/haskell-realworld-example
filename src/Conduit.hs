@@ -50,8 +50,7 @@ runConduit cfg = do
     let jwtKey = fromOctets . encodeUtf8 . cfgJwtSecret $ cfg
     pool <- loadPool $ cfgDb cfg
     result <- autoMigrate pool
-    whenJust result $ \e -> do
-        error $ show e
+    whenJust result $ error . show
     let env = AppEnv
                 { envDbPool = pool
                 , envJwtKey = jwtKey
@@ -64,7 +63,7 @@ runApplication port env = do
     let warpSettings = Warp.defaultSettings
                      & Warp.setPort (fromIntegral port)
                      & Warp.setTimeout 60
-    Warp.runSettings warpSettings $ warpLogger $ mkApp env
+    Warp.runSettings warpSettings . warpLogger $ mkApp env
 
 jsonRequestLogger :: IO Middleware
 jsonRequestLogger =

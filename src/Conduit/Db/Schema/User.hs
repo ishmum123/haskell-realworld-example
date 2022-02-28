@@ -33,12 +33,12 @@ userSchema = TableSchema
     { name = "users"
     , schema = Nothing
     , columns = UserEntity
-        { entityUserId       = "user_id"
-        , entityUserName     = "user_username"
-        , entityUserEmail    = "user_email"
-        , entityUserPassword = "user_password"
-        , entityUserBio      = "user_bio"
-        , entityUserImage    = "user_image"
+        { entityUserId       = "id"
+        , entityUserName     = "username"
+        , entityUserEmail    = "email"
+        , entityUserPassword = "password"
+        , entityUserBio      = "bio"
+        , entityUserImage    = "image"
         }
     }
 
@@ -86,7 +86,7 @@ insertUserStmt :: User -> HashedPassword -> Insert [UserId]
 insertUserStmt user hash = Insert
     { into = userSchema
     , rows = values [ UserEntity
-                        { entityUserId       = unsafeCastExpr $ nextval "users_user_id_seq"
+                        { entityUserId       = unsafeCastExpr $ nextval "users_id_seq"
                         , entityUserName     = lit (userName user)
                         , entityUserEmail    = lit (userEmail user)
                         , entityUserBio      = lit (userBio user)

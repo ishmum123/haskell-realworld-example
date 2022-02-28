@@ -35,13 +35,13 @@ commentSchema = TableSchema
     { name = "comments"
     , schema = Nothing
     , columns = CommentEntity
-        { entityCommentId        = "comment_id"
-        , entityCommentUUID      = "comment_uuid"
-        , entityCommentBody      = "comment_body"
-        , entityCommentArticleId = "comment_article_id"
-        , entityCommentAuthorId  = "comment_user_id"
-        , entityCommentCreatedAt = "comment_createdat"
-        , entityCommentUpdatedAt = "comment_updatedat"
+        { entityCommentId        = "id"
+        , entityCommentUUID      = "uuid"
+        , entityCommentBody      = "body"
+        , entityCommentArticleId = "article_id"
+        , entityCommentAuthorId  = "user_id"
+        , entityCommentCreatedAt = "created_at"
+        , entityCommentUpdatedAt = "updated_at"
         }
     }
 
@@ -79,7 +79,7 @@ insertCommentStmt comment = Insert
     { into = commentSchema
     , rows = values [
         CommentEntity
-            { entityCommentId        = unsafeCastExpr $ nextval "comments_comment_id_seq"
+            { entityCommentId        = unsafeCastExpr $ nextval "comments_id_seq"
             , entityCommentUUID      = lit $ commentUUID comment
             , entityCommentBody      = lit $ commentBody comment
             , entityCommentArticleId = lit $ commentArticleId comment

@@ -2,18 +2,15 @@ module Test.Conduit.Api.StorySpec where
 
 import Test.Hspec
 import RIO
-import qualified RIO.List as L
 import qualified Test.Hspec.Wai as THW
 import Test.Conduit.TestHelper
 import Conduit.Api.Common
-import Conduit.Api.User
 import Conduit.Api.Article
 import Conduit.Api.Comment
 import Data.Maybe
 import Data.Aeson
 import Network.Wai.Test
 import Network.HTTP.Types
-import qualified Data.ByteString as B
 import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 
@@ -89,7 +86,7 @@ spec = do
                 liftIO $ mbBody `shouldNotBe` Nothing
                 let (BoxedComment commentData) = fromJust mbBody
                 liftIO $ commentDataBody commentData `shouldBe` body
-                liftIO $ (profileUsername $ commentDataAuthor commentData) `shouldBe` username
+                liftIO $ profileUsername (commentDataAuthor commentData) `shouldBe` username
 
             it "should create an article" $ do
                 let title = "test article title"
@@ -110,5 +107,4 @@ spec = do
                 liftIO $ mbBody `shouldNotBe` Nothing
                 let (BoxedArticle articleData) = fromJust mbBody
                 liftIO $ articleDataBody articleData `shouldBe` body
-                liftIO $ (profileUsername $ articleDataAuthor articleData) `shouldBe` username
-
+                liftIO $ profileUsername (articleDataAuthor articleData) `shouldBe` username

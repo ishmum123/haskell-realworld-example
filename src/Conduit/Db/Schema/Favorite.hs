@@ -27,8 +27,8 @@ favoriteSchema = TableSchema
     { name = "favorited"
     , schema = Nothing
     , columns = FavoriteEntity
-        { favoriteUserId = "favor_user_id"
-        , favoriteArticleId = "favor_article_id"
+        { favoriteUserId = "user_id"
+        , favoriteArticleId = "article_id"
         }
     }
 

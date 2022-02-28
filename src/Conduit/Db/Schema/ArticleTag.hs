@@ -25,8 +25,8 @@ articleTagSchema = TableSchema
     { name = "tagged"
     , schema = Nothing
     , columns = ArticleTagEntity
-        { tgdArticleId = "tgd_article_id"
-        , tgdTagId     = "tgd_tag_id"
+        { tgdArticleId = "article_id"
+        , tgdTagId     = "tag_id"
         }
     }
 

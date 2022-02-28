@@ -34,14 +34,14 @@ articleSchema = TableSchema
     { name = "articles"
     , schema = Nothing
     , columns = ArticleEntity
-        { entityArticleId          = "article_id"
-        , entityArticleAuthorId    = "article_user_id"
-        , entityArticleTitle       = "article_title"
-        , entityArticleSlug        = "article_slug"
-        , entityArticleDescription = "article_description"
-        , entityArticleBody        = "article_body"
-        , entityArticleCreatedAt   = "article_createdat"
-        , entityArticleUpdatedAt   = "article_updatedat"
+        { entityArticleId          = "id"
+        , entityArticleAuthorId    = "user_id"
+        , entityArticleTitle       = "title"
+        , entityArticleSlug        = "slug"
+        , entityArticleDescription = "description"
+        , entityArticleBody        = "body"
+        , entityArticleCreatedAt   = "created_at"
+        , entityArticleUpdatedAt   = "updated_at"
         }
     }
 
@@ -62,7 +62,7 @@ insertArticleStmt :: Article -> Insert [ArticleId]
 insertArticleStmt article = Insert
     { into = articleSchema
     , rows = values [ ArticleEntity
-                        { entityArticleId          = unsafeCastExpr $ nextval "articles_article_id_seq"
+                        { entityArticleId          = unsafeCastExpr $ nextval "articles_id_seq"
                         , entityArticleAuthorId    = lit (articleAuthorId article)
                         , entityArticleTitle       = lit (articleTitle article)
                         , entityArticleSlug        = lit (articleSlug article)

@@ -24,9 +24,7 @@ import Conduit.JWT (getSubject, verifyJwt)
 import Conduit.Util ( hoistMaybe )
 
 handleOptionalAuthentication :: AppEnv -> AuthHandler Request (Maybe User)
-handleOptionalAuthentication env =
-  let handler req = liftIO $ getUserFromJwtToken env req
-   in mkAuthHandler handler
+handleOptionalAuthentication env = mkAuthHandler $ liftIO . getUserFromJwtToken env
 
 handleAuthentication :: AppEnv -> AuthHandler Request User
 handleAuthentication env =
@@ -41,7 +39,7 @@ getUserFromJwtToken :: AppEnv -> Request -> IO (Maybe User)
 getUserFromJwtToken env req = runMaybeT $ do
   token <- hoistMaybe $ lookup "Authorization" (requestHeaders req)
   username <- decodeToken (envJwtKey env) token
-  MaybeT $ liftIO $ runRIO env $ getUserByName username
+  MaybeT . liftIO . runRIO env $ getUserByName username
 
 decodeToken :: JWK -> ByteString -> MaybeT IO Username
 decodeToken jwk authToken = do
